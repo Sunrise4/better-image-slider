@@ -88,6 +88,6 @@
   cursor: pointer;
 }
 
-.carousel_indicator.current-slide {
+.carousel_indicator--current-slide {
   background: rgba(0, 0, 0, 0.75);
 }
