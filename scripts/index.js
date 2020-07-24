@@ -18,13 +18,31 @@ function setSlidePosition() {
   });
 }
 
+function moveToSlide(track, currentSlide, targetSlide) {
+  track.style.transform = 'translateX(-' + targetSlide.style.left;
+  +')';
+  currentSlide.classList.remove('carousel_slide--current-slide');
+  targetSlide.classList.add('carousel_slide--current-slide');
+}
+
 //when i click left, move slides to the let
-//when i click right, move slides to the right
-nextButton.addEventListener('click', (e) => {
-  //move the slide right
+prevButton.addEventListener('click', (e) => {
   const currentSlide = track.querySelector(
     '.carousel_slide--current-slide',
   );
-  console.log(currentSlide);
+  const prevSlide = currentSlide.previousElementSibling;
+
+  moveToSlide(track, currentSlide, prevSlide);
+});
+//when i click right, move slides to the right
+nextButton.addEventListener('click', (e) => {
+  const currentSlide = track.querySelector(
+    '.carousel_slide--current-slide',
+  );
+  const nextSlide = currentSlide.nextElementSibling;
+
+  moveToSlide(track, currentSlide, nextSlide);
 });
 //when i click the nav indicators, move the the corresponding slide
+
+//36min on vid
