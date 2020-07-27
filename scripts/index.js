@@ -6,9 +6,6 @@ const navBar = document.querySelector('.carousel_nav');
 const navDots = Array.from(navBar.children);
 const slideWidth = slides[0].getBoundingClientRect().width;
 
-//arrange the slides next to one another
-setSlidePosition();
-
 function setSlidePosition() {
   slides.forEach((slide, index) => {
     slide.style.left = slideWidth * index + 'px';
@@ -16,15 +13,26 @@ function setSlidePosition() {
 }
 
 function moveToSlide(track, currentSlide, targetSlide) {
-  track.style.transform = 'translateX(-' + targetSlide.style.left;
-  +')';
-  currentSlide.classList.remove('carousel_slide--current-slide');
-  targetSlide.classList.add('carousel_slide--current-slide');
+  if (!targetSlide) {
+    track.style.transform = 'translateX(0px)';
+    currentSlide.classList.remove('carousel_slide--current-slide');
+    slides[0].classList.add('carousel_slide--current-slide');
+  } else {
+    track.style.transform = 'translateX(-' + targetSlide.style.left;
+    +')';
+    currentSlide.classList.remove('carousel_slide--current-slide');
+    targetSlide.classList.add('carousel_slide--current-slide');
+  }
 }
 
 function updateDots(currentDot, targetDot) {
   currentDot.classList.remove('carousel_indicator--current-slide');
-  targetDot.classList.add('carousel_indicator--current-slide');
+
+  if (!targetDot) {
+    navDots[0].classList.add('carousel_indicator--current-slide');
+  } else {
+    targetDot.classList.add('carousel_indicator--current-slide');
+  }
 }
 
 function hideShowArrows(slides, prevButton, nextButton, targetIndex) {
@@ -39,6 +47,32 @@ function hideShowArrows(slides, prevButton, nextButton, targetIndex) {
     nextButton.classList.remove('is-hidden');
   }
 }
+
+function slideTimer() {
+  setInterval((e) => {
+    const currentSlide = track.querySelector(
+      '.carousel_slide--current-slide',
+    );
+    const nextSlide = currentSlide.nextElementSibling;
+    const currentDot = navBar.querySelector(
+      '.carousel_indicator--current-slide',
+    );
+    const nextDot = currentDot.nextElementSibling;
+    const nextIndex = slides.findIndex(
+      (slide) => slide === nextSlide,
+    );
+
+    moveToSlide(track, currentSlide, nextSlide);
+    updateDots(currentDot, nextDot);
+    hideShowArrows(slides, prevButton, nextButton, nextIndex);
+  }, 5000);
+}
+
+//arrange the slides next to one another
+setSlidePosition();
+
+//set auto slider
+slideTimer();
 
 //when i click left, move slides to the let
 prevButton.addEventListener('click', (e) => {
