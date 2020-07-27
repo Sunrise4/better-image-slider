@@ -4,12 +4,9 @@ const nextButton = document.querySelector('.carousel_button--right');
 const prevButton = document.querySelector('.carousel_button--left');
 const navBar = document.querySelector('.carousel_nav');
 const navDots = Array.from(navBar.children);
-
 const slideWidth = slides[0].getBoundingClientRect().width;
 
 //arrange the slides next to one another
-// slides[0].style.left = slideWidth * 0 + 'px';
-// slides[1].style.left = slideWidth * 1 + 'px';
 setSlidePosition();
 
 function setSlidePosition() {
@@ -78,7 +75,6 @@ nextButton.addEventListener('click', (e) => {
 });
 
 //when i click the nav indicators, move the the corresponding slide
-
 navBar.addEventListener('click', (e) => {
   const targetDot = e.target.closest('button');
   if (!targetDot) return;
@@ -90,7 +86,6 @@ navBar.addEventListener('click', (e) => {
     '.carousel_indicator--current-slide',
   );
   const targetIndex = navDots.findIndex((dot) => dot === targetDot);
-  console.log(targetIndex);
   const targetSlide = slides[targetIndex];
 
   moveToSlide(track, currentSlide, targetSlide);
@@ -99,4 +94,3 @@ navBar.addEventListener('click', (e) => {
 
   hideShowArrows(slides, prevButton, nextButton, targetIndex);
 });
-//50:30min on vid
